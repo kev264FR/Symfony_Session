@@ -18,7 +18,10 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                "attr"=>["class"=>"form-control"]
+            ])
+
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -27,6 +30,7 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'The password fields must match.',
@@ -47,7 +51,15 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-        ;
+
+            ->add("nom", null, [
+                "attr"=>["class"=>"form-control"]
+            ])
+            
+            ->add("prenom", null, [
+                "attr"=>["class"=>"form-control"]
+            ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

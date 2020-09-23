@@ -58,6 +58,16 @@ class User implements UserInterface
      */
     private $categories;
 
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $nom;
+
+    /**
+     * @ORM\Column(type="string", length=50)
+     */
+    private $prenom;
+
     public function __construct()
     {
         $this->stagiaires = new ArrayCollection();
@@ -110,6 +120,10 @@ class User implements UserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function hasRole($role){
+        return in_array($role, $this->roles);
     }
 
     /**
@@ -267,4 +281,33 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): self
+    {
+        $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): self
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+    
+    public function getFullName(){
+        return $this->nom." ".$this->prenom;
+    }
+
 }

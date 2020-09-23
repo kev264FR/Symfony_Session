@@ -1,0 +1,24 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{% if edit %}
+    <h1>Modifier la categorie</h1>
+{% else %}
+    <h1>Ajout d'une categorie</h1>
+{% endif %}
+
+
+{{form_start(form)}}
+
+    {{form_row(form.nom)}}
+
+    {% if edit %}
+            <input class="btn btn-success" type="submit" value="modifier">
+        {% else %}
+            <input class="btn btn-success" type="submit" value="Ajouter">
+    {% endif %}
+    
+{{form_end(form)}}
+
+{% endblock %}
