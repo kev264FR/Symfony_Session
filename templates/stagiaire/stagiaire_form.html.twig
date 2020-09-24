@@ -1,0 +1,51 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+{% if edit %}
+    <h1>Modifier le stagiaire</h1>
+{% else %}
+    <h1>Ajout d'un stagiaire</h1>
+{% endif %}
+
+
+{{form_start(form)}}
+
+    <div class="form-group">
+        {{form_row(form.nom)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.prenom)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.email)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.numero)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.adresse)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.codePostal)}}
+    </div>
+
+    <div class="form-group">
+        {{form_row(form.ville)}}
+    </div>
+
+    
+    {% if edit %}
+            <input class="btn btn-success" type="submit" value="modifier">
+        {% else %}
+            <input class="btn btn-success" type="submit" value="Ajouter">
+    {% endif %}
+    
+{{form_end(form)}}
+
+{% endblock %}

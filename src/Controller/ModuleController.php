@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Categorie;
 use App\Entity\Module;
 use App\Form\CategorieType;
+use App\Form\ModuleType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ModuleController extends AbstractController
 {
     /**
-     * @Route("/categories", name="modules_categories")
+     * @Route("/categories", name="categories")
      */
     public function index()
     {
@@ -23,6 +24,7 @@ class ModuleController extends AbstractController
                         ->getRepository(Categorie::class)
                         ->findAll();
 
+        dump($categories);
         return $this->render('module/index.html.twig', [
             "categories"=>$categories
         ]);
@@ -64,4 +66,74 @@ class ModuleController extends AbstractController
             "edit"=>$edit
         ]);
     }
+
+    /**
+     * @Route("/categorie/delete/{id}", name="delete_categorie")
+     */
+    public function deleteCategorie(Categorie $categorie){
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($categorie);
+        $manager->flush();
+
+        return $this->redirectToRoute("categories");
+    }
+
+    /**
+     * @Route("/categorie/{id}", name="modules_in_categorie")
+     */
+    public function modulesList(Categorie $categorie){
+        return $this->render("module/modules_in_categorie.html.twig", [
+            "categorie"=>$categorie
+        ]);
+    }
+
+    /**
+     * @Route("/new", name="new_module")
+     * @Route("/edit/{id}", name="edit_module")
+     */
+    public function newModule(Request $request, Module $module = null){
+
+        $manager = $this->getDoctrine()->getManager();
+        $edit = false;
+        
+        if (!$module) {
+            $module = new Module();
+        }else{
+            $edit = true;
+        }
+        
+        $form = $this->createForm(ModuleType::class, $module);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$edit) {
+                $module->setUser($this->getUser());
+            }
+            $manager->persist($module);
+            $manager->flush();
+            $categorie = $module->getCategorie();
+            
+            return $this->redirectToRoute("modules_in_categorie", ["id"=>$categorie->getId()]);
+        }
+
+        return $this->render("module/module_form.html.twig", [
+            "edit"=>$edit,
+            "form"=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/delete/{id}", name="delete_module")
+     */
+    public function deleteModule(Module $module){
+        $manager = $this->getDoctrine()->getManager();
+        $categorie = $module->getCategorie();
+        $manager->remove($module);
+        $manager->flush();
+        return $this->redirectToRoute("modules_in_categorie", ["id"=>$categorie->getId()]);
+    }
+
+
+
 }

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste stagiaires{% endblock %}
+
+{% block body %}
+
+<h1>Liste des stagiaires</h1>
+
+<div id="test">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom </th>
+                <th>E-mail</th>
+                <th>
+                    <a href="{{path("new_stagiaire")}}">Ajouter un stagiaire</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stagiaire in stagiaires %}
+                <tr class="table-primary">
+                    <th>
+                        <a href="{{path("stagiaire", {id: stagiaire.id})}}">{{stagiaire.fullname}}</a>
+                    </th>
+                    <td>{{stagiaire.email}}</td>
+                    <td>ajouté par {{stagiaire.user.fullname}} </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+</div>
+{% endblock %}

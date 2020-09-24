@@ -196,4 +196,8 @@ class Stagiaire
 
         return $this;
     }
+
+    public function fullName(){
+        return $this->nom." ".$this->prenom;
+    }
 }

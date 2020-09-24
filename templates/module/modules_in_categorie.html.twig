@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modules{% endblock %}
+
+{% block body %}
+
+<h1>Modules de la categorie {{categorie.nom}}</h1>
+<a class="btn btn-primary" href="{{path("new_module")}}">Ajouter un module</a>
+
+<hr>
+
+{% for module in categorie.modules %}
+
+    <div class="card border-secondary mb-3" style="max-width: 20rem;">
+        <div class="card-header">ajouté par {{module.user.fullname}} </div>
+        <div class="card-body">
+            <h4 class="card-title">{{module.nom}}</h4>
+            <p class="card-text">{{module.description}}</p>
+            <a class="btn btn-primary" href="{{path("edit_module", {id: module.id})}}">Modifier</a>
+            <a class="btn btn-danger" href="{{path("delete_module", {id: module.id})}}">Supprimer</a>
+        </div>
+    </div>
+    
+{% endfor %}
+
+{% endblock %}
