@@ -184,4 +184,9 @@ class Session
 
         return $this;
     }
+
+    public function sessionDuree(){
+        $duree = date_diff($this->dateDebut, $this->dateFin);
+        return $duree;
+    }
 }

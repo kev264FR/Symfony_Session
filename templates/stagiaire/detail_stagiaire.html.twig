@@ -5,6 +5,35 @@
 {% block body %}
     <h1>Detail de : <strong>{{stagiaire.fullname}}</strong></h1>
 
-    <p></p>
+    <a class="btn btn-primary" href="{{path("edit_stagiaire", {id: stagiaire.id})}}">Modifier ce stagiaire</a>
+    <a class="btn btn-danger" href="{{path("delete_stagiaire", {id: stagiaire.id})}}">Supprimer</a>
+    <hr>
+
+    <p>
+        Ce stagiaire a été créé par {{stagiaire.user.fullname}}
+    </p>
+
+    <p>
+        Email : <a href="mailto:{{stagiaire.email}}">{{stagiaire.email}}</a>
+    </p>
+
+    {% if stagiaire.numero %}
+            <p>
+                Numero de telephone : {{stagiaire.numero}}
+            </p>
+        {% else %}
+            <p>Numero de téléphone non communiqué</p>
+    {% endif %}
+    {% if stagiaire.adresse and stagiaire.codePostal and stagiaire.ville %}
+            <p>
+                Adresse : {{stagiaire.adresse}}, {{stagiaire.codePostal}} {{stagiaire.ville | upper}}
+            </p>
+        {% else %}
+            <p>Adresse non communiqué</p>
+    {% endif %}
+
+    {% if stagiaire.inscription is empty %}
+            <p>Ce stagiaire ne participe à aucune formation</p>
+    {% endif %}
 
 {% endblock %}

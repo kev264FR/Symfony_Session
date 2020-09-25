@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>Ajouter une session de formation</h1>
+    <hr>
+
+    {{form_start(form)}}
+
+        {{form_row(form.intitule)}}
+
+        {{form_row(form.dateDebut)}}
+
+        {{form_row(form.dateFin)}}
+
+        {{form_row(form.place)}}
+
+        <input type="submit" value="Ajouter">
+    {{form_end(form)}}
+
+{% endblock %}

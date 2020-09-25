@@ -68,4 +68,15 @@ class StagiaireController extends AbstractController
             "stagiaire"=>$stagiaire
         ]);
     }
+
+    /**
+     * @Route("/delete/{id}", name="delete_stagiaire")
+     */
+    public function deleteStagiaire(Stagiaire $stagiaire){
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($stagiaire);
+        $manager->flush();
+
+        return $this->redirectToRoute("stagiaires");
+    }
 }

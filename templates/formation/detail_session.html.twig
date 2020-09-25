@@ -1,0 +1,31 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<h1>Detail de la session : <strong>{{session.intitule}}</strong></h1>
+<hr>
+
+<p>
+    Cette session a été créé par : {{session.user.fullname}}
+</p>
+
+<p>
+    Du {{session.dateDebut | date("d/m/Y")}} au {{session.dateFin | date("d/m/Y")}}, soit {{session.sessionDuree.days * 7 }} heures <small>( basé sur 35 heures/semaine)</small>
+</p>
+
+<p>
+    Dans cette formation il y a {{session.place - session.stagiaires | length}} place(s) restante(s), sur {{session.place}}. 
+</p>
+{% if session.stagiaires is empty %}
+            <p>Il n'y a pas encore de stagiaire inscrit</p>
+        {% else %}
+            <p>Les stagiaires inscrits sont :</p>
+            <ul>
+                {% for stagiaire in session.stagiaires %}
+                    <li>
+                        {{stagiaire.fullname}}
+                    </li>
+                {% endfor %}
+            </ul>
+    {% endif %}
+
+{% endblock %}

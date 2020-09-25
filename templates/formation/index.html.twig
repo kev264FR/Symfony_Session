@@ -1,12 +1,37 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}Home{% endblock %}
+{% extends "base.html.twig" %}
 
 {% block body %}
 
-    <h1>Bienvenue sur la gestion des sessions de formation</h1>
+    <h1>Liste des formations</h1>
 
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga iusto officiis maxime quidem explicabo in cupiditate iure blanditiis aspernatur! Veritatis alias modi ad eos. Sunt nam necessitatibus commodi debitis laborum quam laboriosam quidem ab ratione ullam nesciunt repudiandae veritatis, rem deserunt voluptate aut asperiores.</p>
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus fuga iusto officiis maxime quidem explicabo in cupiditate iure blanditiis aspernatur! Veritatis alias modi ad eos. Sunt nam necessitatibus commodi debitis laborum quam laboriosam quidem ab ratione ullam nesciunt repudiandae veritatis, rem deserunt voluptate aut asperiores.</p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Intitule</th>
+                <th>Date de debut</th>
+                <th>Date de fin</th>
+                <th>Place de départ</th>
+                <th>Place disponible</th>
+                <th>Stagiaires inscrits</th>
+                <th>
+                    <a href="{{path("new_session")}}">Ajouter une session</a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for session in sessions %}
+                <tr class="table-primary">
+                    <th>
+                        <a href="{{path("session", {id: session.id})}}">{{session.intitule}}</a>
+                    </th>
+                    <td>{{session.dateDebut | date("d/m/Y")}}</td>
+                    <td>{{session.dateFin | date("d/m/Y")}}</td>
+                    <td>{{session.place}}</td>
+                    <td>{{session.place - session.stagiaires | length }}</td>
+                    <td>{{session.stagiaires | length}}</td>
+                    <td>Créé par : {{session.user.fullname}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
 
 {% endblock %}

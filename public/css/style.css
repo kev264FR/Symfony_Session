@@ -12,8 +12,3 @@ h1{
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
-
-#test{
-    width: 800px;
-    margin: auto;
-}

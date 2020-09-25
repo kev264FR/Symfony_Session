@@ -58,7 +58,7 @@ class ModuleController extends AbstractController
             $manager->persist($categorie);
             $manager->flush();
 
-            return $this->redirectToRoute("modules_categories");
+            return $this->redirectToRoute("categories");
 
         }
         return $this->render("module/categorie_form.html.twig", [
