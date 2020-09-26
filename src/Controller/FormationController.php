@@ -3,10 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Session;
+use App\Entity\Stagiaire;
 use App\Form\SessionType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Form\InscriptionType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 /**
  * @Route("/formation")
@@ -67,5 +71,47 @@ class FormationController extends AbstractController
         return $this->render("formation/detail_session.html.twig", [
             "session"=>$session
         ]);
+    }
+
+    /**
+     * @Route("/stagiaires/{id}", name="stagiaires_in_session")
+     */
+    public function addStagiaire(Request $request, Session $session){
+        $manager = $this->getDoctrine()->getManager();
+
+
+        $form = $this->createForm(InscriptionType::class, $session);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()){
+
+            foreach ($form->get("stagiaires")->getData() as $stagiaire){
+                $session->addStagiaire($stagiaire);
+            }
+            $manager->persist($session);
+            $manager->flush();
+
+            
+            return $this->redirectToRoute("session", ["id"=>$session->getId()]);
+        }
+
+        return $this->render("formation/inscription_stagiaires.html.twig", [
+            "session"=>$session,
+            "form"=>$form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/remove/{stagiaire_id}", name="remove_stagiaire")
+     * @ParamConverter("stagiaire", options={"id"="stagiaire_id"} )
+     */
+    public function removeStagiaire(Session $session, Stagiaire $stagiaire){
+        $manager = $this->getDoctrine()->getManager();
+
+        $session->removeStagiaire($stagiaire);
+        $manager->persist($session);
+        $manager->flush();
+
+        return $this->redirectToRoute("session", ["id"=>$session->getId()]);
     }
 }

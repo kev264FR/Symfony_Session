@@ -136,20 +136,16 @@ class Session
 
     public function addStagiaire(Stagiaire $stagiaire): self
     {
-        if (!$this->stagiaires->contains($stagiaire)) {
             $this->stagiaires[] = $stagiaire;
             $stagiaire->addInscription($this);
-        }
 
         return $this;
     }
 
     public function removeStagiaire(Stagiaire $stagiaire): self
     {
-        if ($this->stagiaires->contains($stagiaire)) {
             $this->stagiaires->removeElement($stagiaire);
             $stagiaire->removeInscription($this);
-        }
 
         return $this;
     }

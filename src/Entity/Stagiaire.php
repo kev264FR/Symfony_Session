@@ -181,18 +181,14 @@ class Stagiaire
 
     public function addInscription(Session $inscription): self
     {
-        if (!$this->inscription->contains($inscription)) {
             $this->inscription[] = $inscription;
-        }
 
         return $this;
     }
 
     public function removeInscription(Session $inscription): self
     {
-        if ($this->inscription->contains($inscription)) {
             $this->inscription->removeElement($inscription);
-        }
 
         return $this;
     }
