@@ -7,8 +7,17 @@
 
     {{form_start(form)}}
 
+        {{form_row(form.stagiaires)}}
         
         <input type="submit" value="ok">
     {{form_end(form)}}
 
+{% endblock %}
+{% block javascript %}
+<script>
+    $(document).ready(function(){
+        $(".plugin").multiSelect()
+    })
+
+</script>
 {% endblock %}

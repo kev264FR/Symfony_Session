@@ -1,0 +1,20 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+
+    <h1>Ajouter un/des module(s) </h1>
+    <hr>
+
+    {{form_start(form)}}
+        <input type="submit" value="Ajouter">
+
+        <div id="test-js">
+            
+            {{ form_row(form.modules)}} 
+            {{form_row(form.durees)}}
+        </div>
+
+    {{form_end(form)}}
+
+
+{% endblock %}

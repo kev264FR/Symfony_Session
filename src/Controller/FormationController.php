@@ -2,10 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Programme;
 use App\Entity\Session;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
+use App\Form\ProgrammeType;
 use App\Form\InscriptionType;
+use App\Form\ProgramEmbeddedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -114,4 +117,36 @@ class FormationController extends AbstractController
 
         return $this->redirectToRoute("session", ["id"=>$session->getId()]);
     }
+
+    /**
+     * @Route("/module/add/{id}", name="add_module_to_session")
+     */
+    public function newProgramme(Request $request, Session $session){
+        $manager = $this->getDoctrine()->getManager();
+
+        $form = $this->createForm(ProgramEmbeddedType::class); 
+        // $form = $this->createForm(ProgrammeType::class);
+        
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $programme = new Programme();
+            $programme->setSession($session);
+            $programme->setModule($form->get("module")->getData());
+            $programme->setDuree($form->get("duree")->getData());
+
+            $manager->persist($programme);
+            $manager->flush();
+
+            return $this->redirectToRoute("session", ["id"=>$session->getId()]);
+        }
+
+        return $this->render("formation/module_add.html.twig",[
+            "form"=>$form->createView()
+        ]);
+    }
+
+
+
 }
