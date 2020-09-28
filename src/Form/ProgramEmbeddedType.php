@@ -14,11 +14,11 @@ class ProgramEmbeddedType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add("modules", EntityType::class, [
+            ->add("module", EntityType::class, [
                 "class"=>Module::class,
                 "choice_label"=>"nom",
             ])
-            ->add("durees", null, [
+            ->add("duree", null, [
                 "action"=>"test"
             ])
         ;
@@ -27,7 +27,7 @@ class ProgramEmbeddedType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // "data_class"=>Programme::class
+            "data_class"=>Programme::class
         ]);
     }
 }

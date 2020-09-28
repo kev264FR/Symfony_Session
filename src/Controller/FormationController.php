@@ -123,20 +123,25 @@ class FormationController extends AbstractController
      */
     public function newProgramme(Request $request, Session $session){
         $manager = $this->getDoctrine()->getManager();
-
-        $form = $this->createForm(ProgramEmbeddedType::class); 
-        // $form = $this->createForm(ProgrammeType::class);
+        $programmes = $session->getProgrammes();
+        $modules = [];
+        foreach ($programmes as $programme) {
+            $modules[] = $programme->getModule()->getNom();
+        }
+        $form = $this->createForm(ProgrammeType::class);
         
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $programme = new Programme();
-            $programme->setSession($session);
-            $programme->setModule($form->get("module")->getData());
-            $programme->setDuree($form->get("duree")->getData());
-
-            $manager->persist($programme);
+            foreach ($form->get("programmes")->getData() as $program ) {
+                // dump($program->getModule()->getNom());
+                // dump($modules);
+                // dump(in_array($program->getModule()->getNom(),$modules));
+                if (!in_array($program->getModule()->getNom(),$modules)) {
+                    $program->setSession($session);
+                    $manager->persist($program);
+                }
+            }
             $manager->flush();
 
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);

@@ -91,7 +91,8 @@ class ModuleController extends AbstractController
     /**
      * @Route("/new", name="new_module")
      * @Route("/edit/{id}", name="edit_module")
-     * @Route("/new/{cat_id}", name="new_in_categorie")
+     * @ParamConverter("module", options={"id"="id"} )
+     * @Route("/new/categorie/{cat_id}", name="new_in_categorie")
      * @ParamConverter("categorie", options={"id"="cat_id"} )
      */
     public function newModule(Request $request, Module $module = null, Categorie $categorie = null){
