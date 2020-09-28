@@ -2,13 +2,14 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorie;
 use App\Entity\Module;
-use App\Form\CategorieType;
 use App\Form\ModuleType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\Categorie;
+use App\Form\CategorieType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/module")
@@ -90,14 +91,19 @@ class ModuleController extends AbstractController
     /**
      * @Route("/new", name="new_module")
      * @Route("/edit/{id}", name="edit_module")
+     * @Route("/new/{cat_id}", name="new_in_categorie")
+     * @ParamConverter("categorie", options={"id"="cat_id"} )
      */
-    public function newModule(Request $request, Module $module = null){
+    public function newModule(Request $request, Module $module = null, Categorie $categorie = null){
 
         $manager = $this->getDoctrine()->getManager();
         $edit = false;
         
         if (!$module) {
             $module = new Module();
+            if ($categorie) {
+                $module->setCategorie($categorie);
+            }
         }else{
             $edit = true;
         }
@@ -112,7 +118,6 @@ class ModuleController extends AbstractController
             }
             $manager->persist($module);
             $manager->flush();
-            $categorie = $module->getCategorie();
             
             return $this->redirectToRoute("modules_in_categorie", ["id"=>$categorie->getId()]);
         }

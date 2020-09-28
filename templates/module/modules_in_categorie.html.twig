@@ -5,7 +5,7 @@
 {% block body %}
 
 <h1>Modules de la categorie {{categorie.nom}}</h1>
-<a class="btn btn-primary" href="{{path("new_module")}}">Ajouter un module</a>
+<a class="btn btn-primary" href="{{path("new_in_categorie", {cat_id: categorie.id})}}">Ajouter un module</a>
 
 <hr>
 
