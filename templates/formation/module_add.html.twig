@@ -4,18 +4,11 @@
 
     <h1>Ajouter un/des module(s) </h1>
     <hr>
-    <button id="addForm">test</button>
     {{form_start(form)}}
         <input type="submit" value="Ajouter">
 
-        <ul class="regs">
-            {% for program in form.programmes %}
-                <li>
-                    {{form_row(program)}}
-                </li>    
-            {% endfor %}
-            
-        </ul>
+        {% form_theme form 'jquery.collection.html.twig' %}
+        {{ form(form) }}
 
     {{form_end(form)}}
 
@@ -23,25 +16,10 @@
 {% block javascripts %}
 {{parent()}}
     <script>
-        $(document).ready(function(){
-            let $rform = $("#programme_programmes").data("prototype")
-            let $collectionHolder = $("ul.regs")
-            $collectionHolder.data("index", $collectionHolder.children("li").length)
-            index = $collectionHolder.data('index');
-            
-            $("#addForm").on("click",function(){
-                console.log("ok")
-                $newForm = $rform.replace(/__name__/g, index);
-
-                $collectionHolder.append("<li>"+$newForm+"</li>")
-                
-                // // increase the index with one for the next item
-                $collectionHolder.data('index', index + 1);
-                index = index + 1    
-            })  
+        $(".test").collection({
+            allow_up: false,
+            allow_down:false,
+            min: 1
         })
-        // $("#test").on("click", function(){
-        //     console.log("ok")
-        // })
     </script>
 {% endblock %}

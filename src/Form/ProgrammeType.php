@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Module;
 use App\Entity\Programme;
+use App\Entity\Session;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,7 +22,8 @@ class ProgrammeType extends AbstractType
                 "allow_add"=>true,
                 "allow_delete"=>true,
                 'entry_options' => ['label' => false],
-                "label"=>false
+                "label"=>false,
+                "attr"=>["class"=>"test"]
             ])
         ;
     }
@@ -29,7 +31,7 @@ class ProgrammeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            // "data_class"=>Programme::class
+            "data_class"=>Session::class
         ]);
     }
 }

@@ -119,30 +119,28 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Route("/module/add/{id}", name="add_module_to_session")
+     * @Route("/modules/{id}", name="add_module_to_session")
      */
     public function newProgramme(Request $request, Session $session){
         $manager = $this->getDoctrine()->getManager();
-        $programmes = $session->getProgrammes();
-        $modules = [];
-        foreach ($programmes as $programme) {
-            $modules[] = $programme->getModule()->getNom();
-        }
-        $form = $this->createForm(ProgrammeType::class);
-        
+        $form = $this->createForm(ProgrammeType::class, $session);
         $form->handleRequest($request);
         
+
         if ($form->isSubmitted() && $form->isValid()) {
-            foreach ($form->get("programmes")->getData() as $program ) {
-                // dump($program->getModule()->getNom());
-                // dump($modules);
-                // dump(in_array($program->getModule()->getNom(),$modules));
-                if (!in_array($program->getModule()->getNom(),$modules)) {
-                    $program->setSession($session);
-                    $manager->persist($program);
-                }
+            $programmes = $this->getDoctrine()
+                            ->getRepository(Programme::class)
+                            ->findBy(["session"=>$session->getId()]);
+            foreach ($programmes as $prgrm) {
+                $manager->remove($prgrm);
+            }
+
+            foreach ($session->getProgrammes() as $prgrm) {
+                $prgrm->setSession($session);
+                $manager->persist($prgrm);
             }
             $manager->flush();
+            
 
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);
         }
