@@ -8,11 +8,13 @@ use App\Entity\Categorie;
 use App\Form\CategorieType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/module")
+ * @IsGranted("ROLE_USER")
  */
 class ModuleController extends AbstractController
 {
@@ -25,7 +27,6 @@ class ModuleController extends AbstractController
                         ->getRepository(Categorie::class)
                         ->findAll();
 
-        dump($categories);
         return $this->render('module/index.html.twig', [
             "categories"=>$categories
         ]);

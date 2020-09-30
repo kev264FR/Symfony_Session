@@ -34,6 +34,12 @@ class Programme
      */
     private $module;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="programmes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -71,6 +77,18 @@ class Programme
     public function setModule(?Module $module): self
     {
         $this->module = $module;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

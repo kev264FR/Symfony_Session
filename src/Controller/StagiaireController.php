@@ -4,12 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Stagiaire;
 use App\Form\StagiaireType;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * @Route("/stagiaire")
+ * @IsGranted("ROLE_USER")
  */
 class StagiaireController extends AbstractController
 {

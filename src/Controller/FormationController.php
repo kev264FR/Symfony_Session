@@ -2,21 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Programme;
 use App\Entity\Session;
+use App\Entity\Programme;
 use App\Entity\Stagiaire;
 use App\Form\SessionType;
 use App\Form\ProgrammeType;
 use App\Form\InscriptionType;
-use App\Form\ProgramEmbeddedType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
  * @Route("/formation")
+ * @IsGranted("ROLE_USER")
  */
 class FormationController extends AbstractController
 {
@@ -119,7 +120,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * @Route("/modules/{id}", name="add_module_to_session")
+     * @Route("/modules/{id}", name="session_programme")
      */
     public function newProgramme(Request $request, Session $session){
         $manager = $this->getDoctrine()->getManager();
@@ -136,6 +137,7 @@ class FormationController extends AbstractController
             }
 
             foreach ($session->getProgrammes() as $prgrm) {
+                $prgrm->setUser($this->getUser());
                 $prgrm->setSession($session);
                 $manager->persist($prgrm);
             }

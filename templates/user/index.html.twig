@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<h1>{{app.user.fullname}}, voici votre profile </h1>
+{% if app.user.role("ROLE_ADMIN") %}
+    <a class="btn btn-primary" href="{{path("user_list")}}">Liste des users</a>
+{% endif %}
+<hr>
+
+<p>
+    Vous disposez des roles :
+</p>
+<ul>
+    {% for role in app.user.roles %}
+        <li>{{role}}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

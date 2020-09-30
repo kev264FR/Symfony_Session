@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello UserController!{% endblock %}
+
+{% block body %}
+<h1>Voici le profile de : {{ user.fullname}} </h1>
+<a class="btn btn-primary" href="{{path("edit_user", {id: user.id})}}">Modifier</a>
+<hr>
+<p>
+    Email : {{user.email}}
+</p>
+<p>
+    Dispose des roles :
+</p>
+<ul>
+    {% for role in user.roles %}
+        <li>{{role}}</li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
