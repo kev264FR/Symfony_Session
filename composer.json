@@ -2,7 +2,6 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "ninsuo/symfony-collection": "^2.1",
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
@@ -82,12 +81,10 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
-            "@auto-scripts",
-            "Fuz\\Symfony\\Collection\\ScriptHandler::postInstall"
+            "@auto-scripts"
         ],
         "post-update-cmd": [
-            "@auto-scripts",
-            "Fuz\\Symfony\\Collection\\ScriptHandler::postUpdate"
+            "@auto-scripts"
         ]
     },
     "conflict": {
