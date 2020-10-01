@@ -47,4 +47,12 @@ class StagiaireRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function test($id){
+        return $this->createQueryBuilder("s")
+                    ->andWhere("s.inscription = :id")
+                    ->setParameter(":id", $id)
+                    ->getQuery()
+                    ->getResult();
+    }
 }

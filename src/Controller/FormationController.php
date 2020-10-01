@@ -83,12 +83,11 @@ class FormationController extends AbstractController
     public function addStagiaire(Request $request, Session $session){
         $manager = $this->getDoctrine()->getManager();
 
-
         $form = $this->createForm(InscriptionType::class, $session);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-
+            
             foreach ($form->get("stagiaires")->getData() as $stagiaire){
                 $session->addStagiaire($stagiaire);
             }

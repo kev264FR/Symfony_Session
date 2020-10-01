@@ -160,23 +160,19 @@ class Session
 
     public function addProgramme(Programme $programme): self
     {
-        if (!$this->programmes->contains($programme)) {
             $this->programmes[] = $programme;
             $programme->setSession($this);
-        }
 
         return $this;
     }
 
     public function removeProgramme(Programme $programme): self
     {
-        if ($this->programmes->contains($programme)) {
             $this->programmes->removeElement($programme);
             // set the owning side to null (unless already changed)
             if ($programme->getSession() === $this) {
                 $programme->setSession(null);
             }
-        }
 
         return $this;
     }
