@@ -18,7 +18,8 @@ class ProgramEmbeddedType extends AbstractType
                 "class"=>Module::class,
                 "choice_label"=>"nom",
                 "attr"=>["class"=>"form-control"],
-                "label"=>"Choix du module :"
+                "label"=>"Choix du module :",
+                "placeholder"=>"Choix du module"
             ])
             ->add("duree", null, [
                 "attr"=>["class"=>"form-control"],

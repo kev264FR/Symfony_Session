@@ -21,7 +21,8 @@ class InscriptionType extends AbstractType
                     "class"=>Stagiaire::class,
                     "choice_label"=>"fullName",
                     "label"=>false,
-                    "attr"=>["class"=>"form-control"]
+                    "attr"=>["class"=>"form-control"],
+                    "placeholder"=>"selection du stagiaire"
                 ],
                 "allow_add"=>true,
                 "allow_delete"=>true,

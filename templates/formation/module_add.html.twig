@@ -27,7 +27,6 @@
     $(document).ready(() => {
 
         if ($(".regs").children("li").length === 0) {
-            
             handleAdd()
         }
         else{
@@ -39,12 +38,14 @@
     })
 
     function handleDelete(){
-        console.log(event)
         $(event.target).parent().remove()
+        if ($(".regs").children("li").length === 0) {
+            handleAdd()
+        }
     }
 
     function handleAdd(){
-        console.log("triggered by "+event)
+        
         let $prototype = $(".regs").data("prototype")
         let $collectionHolder = $(".regs")
 
@@ -53,10 +54,13 @@
             
         $newForm = $prototype.replace(/__name__/g, index);
             
+        let btnAdd = "<a class='addForm btn btn-primary' href='#' onclick='handleAdd()'>Ajout</a>"
+        let btnDelete = "<a class='deleteForm btn btn-danger' href='#' onclick='handleDelete()'>Delete</a>"
+                
+            
         $collectionHolder.append(
             "<li>"+$newForm+
-                "<a class='addForm btn btn-primary' href='#' onclick='handleAdd()'>Ajout</a>"+
-                "<a class='deleteForm btn btn-danger' href='#' onclick='handleDelete()'>Delete</a>"+
+                btnAdd+btnDelete+
             "</li>"
         )
 
@@ -64,5 +68,6 @@
         $collectionHolder.data('index', index + 1);
         index = index + 1 
     }
+
 </script>
 {% endblock %}

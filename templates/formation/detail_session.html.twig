@@ -39,14 +39,24 @@
         <p>
             Le programme de la session est :
         </p>
-        <ul>
-            
-            {% for programme in session.programmes %}
-                <li>
-                    {{programme.module.nom}}, duréé {{programme.duree}} j, ce module est dans la categorie {{programme.module.categorie.nom}}
-                </li>
-            {% endfor %}
-        </ul>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Module</th>
+                    <th>Durée</th>
+                    <th>Categorie</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in session.programmes %}
+                <tr class="table-primary">
+                    <td>{{programme.module.nom}}</td>
+                    <td>{{programme.duree}} jour(s)</td>
+                    <td>{{programme.module.categorie.nom}}</td>
+                </tr>
+                {% endfor %}        
+            </tbody>
+        </table>
         
 {% endif %}
 
