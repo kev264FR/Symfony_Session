@@ -48,11 +48,12 @@ class StagiaireRepository extends ServiceEntityRepository
     }
     */
 
-    public function test($id){
-        return $this->createQueryBuilder("s")
-                    ->andWhere("s.inscription = :id")
-                    ->setParameter(":id", $id)
-                    ->getQuery()
-                    ->getResult();
+    public function findFromSession($session){
+        return $this->createQueryBuilder('s')
+            ->innerJoin('s.inscription', 'i')
+            ->where('i = :session')
+            ->setParameter('session', $session)
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -87,10 +87,17 @@ class FormationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            
-            foreach ($form->get("stagiaires")->getData() as $stagiaire){
+            $stagiaires = $this->getDoctrine()
+                            ->getRepository(Stagiaire::class)
+                            ->findFromSession($session);
+            foreach ($stagiaires as $stg) {
+                $stg->removeInscription($session);
+            }
+
+            foreach ($session->getStagiaires() as $stagiaire) {
                 $session->addStagiaire($stagiaire);
             }
+            
             $manager->persist($session);
             $manager->flush();
 
@@ -102,20 +109,6 @@ class FormationController extends AbstractController
             "session"=>$session,
             "form"=>$form->createView()
         ]);
-    }
-
-    /**
-     * @Route("/{id}/remove/{stagiaire_id}", name="remove_stagiaire")
-     * @ParamConverter("stagiaire", options={"id"="stagiaire_id"} )
-     */
-    public function removeStagiaire(Session $session, Stagiaire $stagiaire){
-        $manager = $this->getDoctrine()->getManager();
-
-        $session->removeStagiaire($stagiaire);
-        $manager->persist($session);
-        $manager->flush();
-
-        return $this->redirectToRoute("session", ["id"=>$session->getId()]);
     }
 
     /**

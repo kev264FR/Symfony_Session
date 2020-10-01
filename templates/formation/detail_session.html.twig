@@ -3,7 +3,7 @@
 {% block body %}
 <h1>Detail de la session : <strong>{{session.intitule}}</strong></h1>
 
-<a class="btn btn-primary" href="{{path("stagiaires_in_session", {id: session.id})}}">Ajouter stagiaire</a>
+<a class="btn btn-primary" href="{{path("stagiaires_in_session", {id: session.id})}}">Gerer les stagiaires</a>
 <a class="btn btn-primary" href="{{path("session_programme", {id: session.id})}}">Gerer les modules</a>
 <hr>
 
@@ -25,7 +25,7 @@
             <ul>
                 {% for stagiaire in session.stagiaires %}
                     <li>
-                        {{stagiaire.fullname}} <a class="btn btn-danger btn-sm" href="{{path("remove_stagiaire", {id: session.id, stagiaire_id: stagiaire.id})}}">retirer</a>
+                        {{stagiaire.fullname}}
                     </li>
                 {% endfor %}
             </ul>

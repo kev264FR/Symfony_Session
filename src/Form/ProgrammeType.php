@@ -21,9 +21,10 @@ class ProgrammeType extends AbstractType
                 "entry_type"=>ProgramEmbeddedType::class,
                 "allow_add"=>true,
                 "allow_delete"=>true,
-                'entry_options' => ['label' => false],
+                'entry_options' => [
+                    'label' => false,
+                ],
                 "label"=>false,
-                "attr"=>["class"=>"test"]
             ])
         ;
     }

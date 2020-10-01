@@ -5,11 +5,67 @@
     <h1>Ajouter stagiaire : session {{session.intitule}}</h1>
     <hr>
 
+    
     {{form_start(form)}}
-
-        {{form_row(form.stagiaires)}}
+        <input class="btn btn-success btn-lg" type="submit" value="ok">
         
-        <input type="submit" value="ok">
+        <ul class="regs" data-prototype="{{ form_widget(form.stagiaires.vars.prototype)|e('html_attr') }}">
+        {% for stagiaire in form.stagiaires %}
+            <li>
+                {{ form_widget(stagiaire) }}
+                <a class='addForm btn btn-primary' href='#'>Ajout</a>
+                <a class='deleteForm btn btn-danger' href='#'>Delete</a>
+            </li>
+        {% endfor %}
+        </ul>
+
+        
     {{form_end(form)}}
 
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script>
+    
+    $(document).ready(() => {
+
+        if ($(".regs").children("li").length === 0) {
+            
+            handleAdd()
+        }
+        else{
+            $(".addForm").on("click", () => handleAdd()) 
+            $(".deleteForm").on("click", () => handleDelete())
+        }
+
+
+    })
+
+    function handleDelete(){
+        console.log(event)
+        $(event.target).parent().remove()
+    }
+
+    function handleAdd(){
+        console.log("triggered by "+event)
+        let $prototype = $(".regs").data("prototype")
+        let $collectionHolder = $(".regs")
+
+        $collectionHolder.data("index", $collectionHolder.children("li").length)
+        let index = $collectionHolder.data('index');
+            
+        $newForm = $prototype.replace(/__name__/g, index);
+            
+        $collectionHolder.append(
+            "<li>"+$newForm+
+                "<a class='addForm btn btn-primary' href='#' onclick='handleAdd()'>Ajout</a>"+
+                "<a class='deleteForm btn btn-danger' href='#' onclick='handleDelete()'>Delete</a>"+
+            "</li>"
+        )
+
+        // // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+        index = index + 1 
+    }
+</script>
 {% endblock %}

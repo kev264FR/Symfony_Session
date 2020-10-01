@@ -5,21 +5,64 @@
     <h1>Ajouter un/des module(s) </h1>
     <hr>
     {{form_start(form)}}
-        <input type="submit" value="Ajouter">
+        <input class="btn btn-success btn-lg" type="submit" value="Ajouter">
 
-        {% form_theme form 'jquery.collection.html.twig' %}
-        {{ form(form) }}
+        <ul class="regs" data-prototype="{{ form_widget(form.programmes.vars.prototype)|e('html_attr') }}">
+            {% for prgrm in form.programmes %}
+                <li>
+                    {{ form_widget(prgrm) }}
+                    <a class='addForm btn btn-primary' href='#'>Ajout</a>
+                    <a class='deleteForm btn btn-danger' href='#'>Delete</a>
+                </li>
+            {% endfor %}
+            </ul>
 
     {{form_end(form)}}
 
 {% endblock %}
 {% block javascripts %}
 {{parent()}}
-    <script>
-        $(".test").collection({
-            allow_up: false,
-            allow_down:false,
-            min: 1
-        })
-    </script>
+<script>
+    
+    $(document).ready(() => {
+
+        if ($(".regs").children("li").length === 0) {
+            
+            handleAdd()
+        }
+        else{
+            $(".addForm").on("click", () => handleAdd()) 
+            $(".deleteForm").on("click", () => handleDelete())
+        }
+        
+       
+    })
+
+    function handleDelete(){
+        console.log(event)
+        $(event.target).parent().remove()
+    }
+
+    function handleAdd(){
+        console.log("triggered by "+event)
+        let $prototype = $(".regs").data("prototype")
+        let $collectionHolder = $(".regs")
+
+        $collectionHolder.data("index", $collectionHolder.children("li").length)
+        let index = $collectionHolder.data('index');
+            
+        $newForm = $prototype.replace(/__name__/g, index);
+            
+        $collectionHolder.append(
+            "<li>"+$newForm+
+                "<a class='addForm btn btn-primary' href='#' onclick='handleAdd()'>Ajout</a>"+
+                "<a class='deleteForm btn btn-danger' href='#' onclick='handleDelete()'>Delete</a>"+
+            "</li>"
+        )
+
+        // // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+        index = index + 1 
+    }
+</script>
 {% endblock %}
