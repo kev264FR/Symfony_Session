@@ -1,9 +1,16 @@
 {% extends 'base.html.twig' %}
 
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("profile")}}">Profil</a></li>
+    <li class="breadcrumb-item"><a href="{{path("user_list")}}">Users</a></li>
+    <li class="breadcrumb-item active">Detail de : {{user.fullname}}</li>
+{% endblock %}
+
 {% block title %}Hello UserController!{% endblock %}
 
 {% block body %}
-<h1>Voici le profile de : {{ user.fullname}} </h1>
+<h1>Voici le profil de : {{ user.fullname}} </h1>
 <a class="btn btn-primary" href="{{path("edit_user", {id: user.id})}}">Modifier</a>
 <hr>
 <p>

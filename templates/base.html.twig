@@ -51,6 +51,10 @@
             </div>
         </nav>
         <div id="wrapper">
+            <ol class="breadcrumb">
+                {% block bread %}
+                {% endblock %}
+            </ol>
             {% for message in app.flashes("error") %}
                 <div class="alert alert-danger">{{ message }}</div>
             {% endfor %}

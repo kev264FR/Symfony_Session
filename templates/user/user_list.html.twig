@@ -2,6 +2,12 @@
 
 {% block title %}Hello UserController!{% endblock %}
 
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("profile")}}">Profil</a></li>
+    <li class="breadcrumb-item active">Users</li>
+{% endblock %}
+
 {% block body %}
 <h1>Liste des users</h1>
 <a class="btn btn-primary" href="{{path("app_register")}}">Créé un utilisateur</a>

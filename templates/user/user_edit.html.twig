@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("profile")}}">Profil</a></li>
+    <li class="breadcrumb-item"><a href="{{path("user_list")}}">Users</a></li>
+    <li class="breadcrumb-item"><a href="{{path("user_detail", {id: user.id})}}">Detail de : {{user.fullname}}</a></li>
+    <li class="breadcrumb-item active">Modification</li>
+{% endblock %}
+
 {% block body %}
 
     <h1>Modification d'user</h1>

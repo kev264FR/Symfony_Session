@@ -1,5 +1,12 @@
 {% extends "base.html.twig" %}
 
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("categories")}}">Categories de modules</a></li>
+    <li class="breadcrumb-item active">Formulaire Module</li>
+{% endblock %}
+
+
 {% block body %}
 
 {% if edit %}

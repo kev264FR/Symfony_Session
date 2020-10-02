@@ -1,10 +1,17 @@
 {% extends "base.html.twig" %}
 
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("sessions")}}">Sessions</a></li>
+    <li class="breadcrumb-item active">{{session.intitule}}</li>
+{% endblock %}
 {% block body %}
 <h1>Detail de la session : <strong>{{session.intitule}}</strong></h1>
 
 <a class="btn btn-primary" href="{{path("stagiaires_in_session", {id: session.id})}}">Gerer les stagiaires</a>
 <a class="btn btn-primary" href="{{path("session_programme", {id: session.id})}}">Gerer les modules</a>
+<a class="btn btn-secondary" href="{{path("edit_session", {id: session.id})}}">Modifier la session</a>
+<a class="btn btn-danger" href="{{path("delete_session", {id: session.id})}}">Delete</a>
 <hr>
 
 <p>

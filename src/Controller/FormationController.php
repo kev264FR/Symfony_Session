@@ -59,7 +59,7 @@ class FormationController extends AbstractController
             $manager->persist($session);
             $manager->flush();
 
-            return $this->redirectToRoute("sessions");
+            return $this->redirectToRoute("session", ["id"=>$session->getId()]);
         }
 
         return $this->render("formation/session_form.html.twig", [
@@ -140,10 +140,27 @@ class FormationController extends AbstractController
         }
 
         return $this->render("formation/module_add.html.twig",[
+            "session"=>$session,
             "form"=>$form->createView()
         ]);
     }
 
+    /**
+     * @Route("/delete/{id}", name="delete_session")
+     */
+    public function deleteSession(Session $session){
+        $manager = $this->getDoctrine()->getManager();
+        foreach ($session->getStagiaires() as $stagiaire) {
+            $session->removeStagiaire($stagiaire);
+        }
+        foreach ($session->getProgrammes() as $programme) {
+            $manager->remove($programme);
+        }
+        $manager->remove($session);
+        $manager->flush();
+
+        return $this->redirectToRoute("sessions");
+    }
 
 
 }

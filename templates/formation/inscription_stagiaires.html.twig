@@ -1,5 +1,13 @@
 {% extends "base.html.twig" %}
 
+
+{% block bread %}
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("sessions")}}">Sessions</a></li>
+    <li class="breadcrumb-item"><a href="{{path("session", {id: session.id})}}">{{session.intitule}}</a></li>
+    <li class="breadcrumb-item active">Gestion des inscriptions</li>
+{% endblock %}
+
 {% block body %}
 
     <h1>Ajouter stagiaire : session {{session.intitule}}</h1>
@@ -7,15 +15,21 @@
 
     
     {{form_start(form)}}
-        <input class="btn btn-success btn-lg" type="submit" value="ok">
-        
+        <div class="btn-group">
+            <input class="btn btn-success btn-lg" type="submit" value="Valider l'inscription">
+        </div>
+
         <ul class="regs" data-prototype="{{ form_widget(form.stagiaires.vars.prototype)|e('html_attr') }}">
         {% for stagiaire in form.stagiaires %}
-            <li>
-                {{ form_widget(stagiaire) }}
-                <a class='addForm btn btn-primary' href='#'>Ajout</a>
-                <a class='deleteForm btn btn-danger' href='#'>Delete</a>
-            </li>
+            <div class="card bg-light mb-3" style="max-width: 20rem;">
+                <div class="card-header">
+                    <a class='addForm btn btn-primary' href='#'>Ajout</a>
+                    <a class='deleteForm btn btn-danger' href='#'>Delete</a>
+                </div>
+                <div class="card-body">
+                    {{ form_widget(stagiaire) }}
+                </div>
+            </div>
         {% endfor %}
         </ul>
 
@@ -25,50 +39,19 @@
 {% endblock %}
 {% block javascripts %}
 {{parent()}}
+<script src="{{asset("js/collection.js")}}"></script>
 <script>
     
     $(document).ready(() => {
-
-        if ($(".regs").children("li").length === 0) { 
+        
+        if ($(".regs").children(".card").length === 0) {
             handleAdd()
         }
         else{
             $(".addForm").on("click", () => handleAdd()) 
             $(".deleteForm").on("click", () => handleDelete())
-        }
-
-
+        }  
     })
 
-    function handleDelete(){
-        $(event.target).parent().remove()
-        if ($(".regs").children("li").length == 0) { 
-            handleAdd()
-        }
-    }
-
-    function handleAdd(){
-
-        let $prototype = $(".regs").data("prototype")
-        let $collectionHolder = $(".regs")
-
-        $collectionHolder.data("index", $collectionHolder.children("li").length)
-        let index = $collectionHolder.data('index');  
-        $newForm = $prototype.replace(/__name__/g, index);
-
-        let btnAdd = "<a class='addForm btn btn-primary' href='#' onclick='handleAdd()'>Ajout</a>"
-        let btnDelete = "<a class='deleteForm btn btn-danger' href='#' onclick='handleDelete()'>Delete</a>"
-                
-            
-        $collectionHolder.append(
-            "<li>"+$newForm+
-                btnAdd+btnDelete+
-            "</li>"
-        )
-
-        // // increase the index with one for the next item
-        $collectionHolder.data('index', index + 1);
-        index = index + 1 
-    }
 </script>
 {% endblock %}
