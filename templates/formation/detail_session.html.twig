@@ -19,33 +19,43 @@
 </p>
 
 <p>
-    Du {{session.dateDebut | date("d/m/Y")}} au {{session.dateFin | date("d/m/Y")}}, soit {{session.sessionDuree.days * 7 }} heures <small>( basé sur 35 heures/semaine)</small>
+    Du {{session.dateDebut | date("d/m/Y")}} au {{session.dateFin | date("d/m/Y")}}, soit {{session.sessionDuree }} heures <small>( basé sur 35 heures/semaine)</small>
 </p>
 
 <p>
     Dans cette formation il y a {{session.place - session.stagiaires | length}} place(s) restante(s), sur {{session.place}}. 
 </p>
+<hr>
 {% if session.stagiaires is empty %}
-            <p>Il n'y a pas encore de stagiaire inscrit</p>
+            <h4>Il n'y a pas encore de stagiaire inscrit</h4>
         {% else %}
-            <p>Les stagiaires inscrits sont :</p>
-            <ul>
-                {% for stagiaire in session.stagiaires %}
-                    <li>
-                        {{stagiaire.fullname}}
-                    </li>
-                {% endfor %}
-            </ul>
+            <h4>Les stagiaires inscrits sont :</h4>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stagiaire in session.stagiaires %}
+                    <tr class="table-secondary">
+                        <td>{{stagiaire.fullname}}</td>
+                        <td>{{stagiaire.email}}</td>
+                    </tr>
+                    {% endfor %}        
+                </tbody>
+            </table>
     {% endif %}
-
+<hr>
 {% if session.programmes is empty %}
-        <p>
+        <h4>
             Le programme n'est pas défini
-        </p>    
+        </h4>    
     {% else %}
-        <p>
+        <h4>
             Le programme de la session est :
-        </p>
+        </h4>
         <table class="table table-hover">
             <thead>
                 <tr>

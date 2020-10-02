@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 /**
@@ -101,7 +100,10 @@ class FormationController extends AbstractController
             $manager->persist($session);
             $manager->flush();
 
-            
+            if (count($session->getStagiaires()) / 2 > $session->getPlace()) {
+                $this->addFlash("error", "Nombre de stagiaires suppérieure au nombre de place");
+                return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
+            }
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);
         }
 
@@ -127,15 +129,19 @@ class FormationController extends AbstractController
             foreach ($programmes as $prgrm) {
                 $manager->remove($prgrm);
             }
-
+            $dureeTotale = 0;
             foreach ($session->getProgrammes() as $prgrm) {
                 $prgrm->setUser($this->getUser());
                 $prgrm->setSession($session);
                 $manager->persist($prgrm);
+                $dureeTotale = $dureeTotale + $prgrm->getDuree();
             }
             $manager->flush();
             
-
+            if ($dureeTotale > $session->sessionDuree() / 5 ) {
+                $this->addFlash("error", "Durée des modules supérieure a la durée de la formation");
+                return $this->redirectToRoute("session_programme", ["id"=>$session->getId()]);
+            }
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);
         }
 

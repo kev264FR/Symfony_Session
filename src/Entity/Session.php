@@ -178,7 +178,7 @@ class Session
     }
 
     public function sessionDuree(){
-        $duree = date_diff($this->dateDebut, $this->dateFin);
+        $duree = date_diff($this->dateDebut, $this->dateFin)->days * 5;
         return $duree;
     }
 }
