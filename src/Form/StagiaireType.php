@@ -13,13 +13,48 @@ class StagiaireType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom')
-            ->add('prenom')
-            ->add('email')
-            ->add('numero')
-            ->add('adresse')
-            ->add('codePostal')
-            ->add('ville')
+            ->add('nom', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Nom :"
+            ])
+            ->add('prenom', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Prenom :"
+            ])
+            ->add('email', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Email :"
+            ])
+            ->add('numero', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Numero de telephone :"
+            ])
+            ->add('adresse', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Adresse postale :"
+            ])
+            ->add('codePostal', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Code postal :"
+            ])
+            ->add('ville', null, [
+                "attr"=>[
+                    "class"=>"form-control"
+                ],
+                "label"=>"Ville :"
+            ])
         ;
     }
 

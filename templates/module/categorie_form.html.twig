@@ -15,10 +15,12 @@
 {% endif %}
 
 
-{{form_start(form)}}
+{{form_start(form, {attr: {class: "user-form"}})}}
 
-    {{form_row(form.nom)}}
-
+    <div class="form-group">
+        {{form_row(form.nom)}}
+    </div>
+    
     {% if edit %}
             <input class="btn btn-success" type="submit" value="modifier">
         {% else %}

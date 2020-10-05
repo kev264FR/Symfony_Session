@@ -9,6 +9,7 @@
 
 {% block body %}
 <h1>{{app.user.fullname}}, voici votre profile </h1>
+<a class="btn btn-primary" href="{{path("change_password")}}">Modifier mon mot de passe</a>
 {% if app.user.role("ROLE_ADMIN") %}
     <a class="btn btn-primary" href="{{path("user_list")}}">Liste des users</a>
 {% endif %}

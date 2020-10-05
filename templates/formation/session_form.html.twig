@@ -11,17 +11,25 @@
     <h1>Ajouter une session de formation</h1>
     <hr>
 
-    {{form_start(form)}}
+    {{form_start(form, {attr: {class: "user-form"}})}}
 
-        {{form_row(form.intitule)}}
+        <div class="form-group">
+            {{form_row(form.intitule)}}
+        </div>
 
-        {{form_row(form.dateDebut)}}
+        <div class="form-group">
+            {{form_row(form.dateDebut)}}
+        </div>
 
-        {{form_row(form.dateFin)}}
+        <div class="form-group">
+            {{form_row(form.dateFin)}}
+        </div>
 
-        {{form_row(form.place)}}
-
-        <input type="submit" value="Ajouter">
+        <div class="form-group">
+            {{form_row(form.place)}}
+        </div>
+        
+        <input class="btn btn-primary" type="submit" value="Ajouter">
     {{form_end(form)}}
 
 {% endblock %}

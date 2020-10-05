@@ -1,5 +1,5 @@
 #wrapper {
-    width: 1200px;
+    max-width: 1200px;
     margin: auto;
 }
 
@@ -11,4 +11,15 @@ h1{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
+}
+
+.user-form {
+    max-width: 600px;
+    margin: auto;
+}
+.regs{
+    display: flex;
+}
+.card{
+    margin: auto;
 }

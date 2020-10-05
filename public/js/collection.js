@@ -22,7 +22,7 @@ function handleAdd(){
             
         
     $collectionHolder.append(
-        "<div class='card bg-light mb-3' style='max-width: 20rem;''>"+
+        "<div class='card bg-light mb-3'>"+
             "<div class='card-header'>"+
                 btnAdd+btnDelete+
             "</div>"+

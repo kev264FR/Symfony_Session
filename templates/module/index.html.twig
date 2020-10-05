@@ -26,12 +26,20 @@
                 <h4 class="card-title">
                     <a href="{{path("modules_in_categorie", {id: categorie.id})}}">{{categorie.nom}}</a>
                 </h4>
+                <a class="btn btn-secondary" href="{{path("edit_categorie", {id: categorie.id})}}">modifier</a>
+                <a class="btn btn-danger" href="{{path("delete_categorie", {id: categorie.id})}}">supprimer</a>
             </div>
-            <a class="btn btn-secondary" href="{{path("edit_categorie", {id: categorie.id})}}">modifier</a>
-            <a class="btn btn-danger" href="{{path("delete_categorie", {id: categorie.id})}}">supprimer</a>
         </div>    
     {% endfor %}
 </div>
-    
+    <a id="test" href="#">test</a>
+
+{% endblock %}
+
+{% block javascripts %}
+{{parent()}}
+<script>
+    $("#test").alert()
+</script>
 
 {% endblock %}
