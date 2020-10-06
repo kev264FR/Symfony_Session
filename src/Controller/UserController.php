@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\ChangePasswordType;
+use App\Form\RoleType;
 use App\Form\UserType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,6 +14,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @Route("/user")
+ * @IsGranted("ROLE_USER")
  */
 class UserController extends AbstractController
 {
@@ -93,5 +95,30 @@ class UserController extends AbstractController
             "user"=>$user,
             "form"=>$form->createView()
         ]);
+    }
+
+    /**
+     * @Route("/admin/toogle/{id}", name="admin_toggle")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function toggleAdmin(User $user){
+        $manager = $this->getDoctrine()->getManager();
+        $status = "";
+        if($user->hasRole("ROLE_ADMIN")){
+            $user->setRoles([]);
+            $status = "remove";
+        }else{
+            $user->setRoles(["ROLE_ADMIN"]);
+            $status = "add";
+        }
+
+        dump($user);
+        $manager->persist($user);
+        $manager->flush();
+        if ($status == "add") {
+            $this->addFlash("success", "L'user est désormais admin");
+        }else $this->addFlash("success", "L'user n'est plus admin");
+        
+        return $this->redirectToRoute("user_detail", ["id"=>$user->getId()]);
     }
 }

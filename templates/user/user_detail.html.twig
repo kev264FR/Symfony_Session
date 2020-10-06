@@ -12,6 +12,12 @@
 {% block body %}
 <h1>Voici le profil de : {{ user.fullname}} </h1>
 <a class="btn btn-primary" href="{{path("edit_user", {id: user.id})}}">Modifier</a>
+{% if user.role("ROLE_ADMIN") %}
+        <a class="btn btn-warning" href="{{path("admin_toggle", {id: user.id})}}">Retirer le role admin</a>
+    {% else %}
+      <a class="btn btn-warning" href="{{path("admin_toggle", {id: user.id})}}">Rendre admin</a>  
+{% endif %}
+
 <hr>
 <p>
     Email : {{user.email}}
@@ -26,4 +32,31 @@
 </ul>
 
 
+{% endblock %}
+{% block javascripts %}
+{{parent()}}
+<script>
+    $(".btn-warning").confirm({
+        title: 'Confirmation',
+        content: 'Valider le changement de role',
+        theme: 'modern',
+        type: 'red',
+        buttons: {  
+            ok: {
+                text: "Continuer",
+                btnClass: "btn-success",
+                action: function(){
+                    location.href = this.$target.attr('href');
+                }
+            },
+            cancel: {
+                text: "Retour",
+                btnClass: "btn-primary",
+                action:  function(){
+                    console.log('the user clicked cancel');
+                }
+            }
+    }
+    })
+</script>
 {% endblock %}

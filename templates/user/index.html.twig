@@ -9,7 +9,7 @@
 
 {% block body %}
 <h1>{{app.user.fullname}}, voici votre profile </h1>
-<a class="btn btn-primary" href="{{path("change_password")}}">Modifier mon mot de passe</a>
+<a class="btn btn-primary passChange" href="{{path("change_password")}}">Modifier mon mot de passe</a>
 {% if app.user.role("ROLE_ADMIN") %}
     <a class="btn btn-primary" href="{{path("user_list")}}">Liste des users</a>
 {% endif %}
@@ -25,4 +25,32 @@
 </ul>
 
 
+{% endblock %}
+
+{% block javascripts %}
+    {{parent()}}
+<script>
+    $(".passChange").confirm({
+        title: 'Confirmation',
+        content: 'Valider la suppression',
+        theme: 'modern',
+        type: 'green',
+        buttons: {  
+            ok: {
+                text: "Continuer",
+                btnClass: "btn-success",
+                action: function(){
+                    location.href = this.$target.attr('href');
+                }
+            },
+            cancel: {
+                text: "Retour",
+                btnClass: "btn-danger",
+                action:  function(){
+                    console.log('the user clicked cancel');
+                }
+            }
+    }
+    })
+</script>
 {% endblock %}
