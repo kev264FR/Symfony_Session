@@ -54,6 +54,12 @@ class FormationController extends AbstractController
             if (!$edit) {
                 $session->setUser($this->getUser());
             }
+            if ($session->getDateDebut() > $session->getDateFin()) {
+                $this->addFlash("error", "Date invalide");
+                if ($edit) {
+                    return $this->redirectToRoute("edit_session", ["id"=>$session->getId()]);
+                }else return $this->redirectToRoute("new_session");
+            }
             
             $manager->persist($session);
             $manager->flush();
@@ -104,6 +110,18 @@ class FormationController extends AbstractController
                 $this->addFlash("error", "Nombre de stagiaires suppérieure au nombre de place");
                 return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
             }
+            
+            foreach ($session->getStagiaires() as $stagiaire) {
+                foreach ($stagiaire->getinscription() as $formation) {
+                    if ($session != $formation) {
+                        if (($session->getDateDebut() <= $formation->getDateFin()) && ($session->getDateFin() >= $formation->getDateDebut())) {
+                            $this->addFlash("error", "erreur un ou plusieurs des stagiaires sont indisponible");
+                            return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
+                        }
+                    }
+                }
+            }
+
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);
         }
 

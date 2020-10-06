@@ -39,7 +39,24 @@
     {% endif %}
 
     {% if stagiaire.inscription is empty %}
-            <p>Ce stagiaire ne participe à aucune formation</p>
+                <p>Ce stagiaire ne participe à aucune formation</p>
+            {% else %}
+                <p>Ce stagiaire est inscrit dans {{stagiaire.inscription | length }} formation(s) : </p>
+                <ul>
+                    {% for formation in stagiaire.inscription %}
+                        <li>
+                            <strong>{{formation.intitule}}</strong> 
+                            <ul>
+                                <li>
+                                    du {{formation.dateDebut | date("d/m/Y")}}
+                                </li>
+                                <li>
+                                    au {{formation.dateFin | date("d/m/Y")}}
+                                </li>
+                            </ul>  
+                        </li>
+                    {% endfor %}
+                </ul>
     {% endif %}
 
 {% endblock %}

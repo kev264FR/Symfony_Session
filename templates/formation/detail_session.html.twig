@@ -30,7 +30,7 @@
             <h4>Il n'y a pas encore de stagiaire inscrit</h4>
         {% else %}
             <h4>Les stagiaires inscrits sont :</h4>
-            <table class="table table-hover">
+            <table class="table table-hover table-responsive">
                 <thead>
                     <tr>
                         <th>Nom</th>
@@ -40,7 +40,7 @@
                 <tbody>
                     {% for stagiaire in session.stagiaires %}
                     <tr class="table-secondary">
-                        <td>{{stagiaire.fullname}}</td>
+                        <th>{{stagiaire.fullname}}</th>
                         <td>{{stagiaire.email}}</td>
                     </tr>
                     {% endfor %}        
@@ -56,7 +56,7 @@
         <h4>
             Le programme de la session est :
         </h4>
-        <table class="table table-hover">
+        <table class="table table-hover table-responsive ">
             <thead>
                 <tr>
                     <th>Module</th>
@@ -67,7 +67,7 @@
             <tbody>
                 {% for programme in session.programmes %}
                 <tr class="table-primary">
-                    <td>{{programme.module.nom}}</td>
+                    <th>{{programme.module.nom}}</th>
                     <td>{{programme.duree}} jour(s)</td>
                     <td>{{programme.module.categorie.nom}}</td>
                 </tr>
