@@ -72,7 +72,11 @@ class ModuleController extends AbstractController
     /**
      * @Route("/categorie/delete/{id}", name="delete_categorie")
      */
-    public function deleteCategorie(Categorie $categorie){
+    public function deleteCategorie(Categorie $categorie = null){
+        if (!$categorie) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($categorie);
         $manager->flush();
@@ -83,7 +87,12 @@ class ModuleController extends AbstractController
     /**
      * @Route("/categorie/{id}", name="modules_in_categorie")
      */
-    public function modulesList(Categorie $categorie){
+    public function modulesList(Categorie $categorie = null){
+        if (!$categorie) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+
         return $this->render("module/modules_in_categorie.html.twig", [
             "categorie"=>$categorie
         ]);
@@ -133,7 +142,11 @@ class ModuleController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete_module")
      */
-    public function deleteModule(Module $module){
+    public function deleteModule(Module $module = null){
+        if (!$module) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
         $manager = $this->getDoctrine()->getManager();
         $categorie = $module->getCategorie();
         $manager->remove($module);

@@ -40,8 +40,15 @@
                 <tbody>
                     {% for stagiaire in session.stagiaires %}
                     <tr class="table-secondary">
-                        <th>{{stagiaire.fullname}}</th>
-                        <td>{{stagiaire.email}}</td>
+                        <th>
+                            <a href="{{path("stagiaire", {id: stagiaire.id})}}">
+                                {{stagiaire.fullname}}
+                            </a>
+                            
+                        </th>
+                        <td>
+                            <a href="mailto:{{stagiaire.email}}">{{stagiaire.email}}</a>
+                        </td>
                     </tr>
                     {% endfor %}        
                 </tbody>
@@ -69,7 +76,12 @@
                 <tr class="table-primary">
                     <th>{{programme.module.nom}}</th>
                     <td>{{programme.duree}} jour(s)</td>
-                    <td>{{programme.module.categorie.nom}}</td>
+                    <td>
+                        <a href="{{path("modules_in_categorie", {id: programme.module.categorie.id})}}">
+                            {{programme.module.categorie.nom}}
+                        </a>
+                        
+                    </td>
                 </tr>
                 {% endfor %}        
             </tbody>

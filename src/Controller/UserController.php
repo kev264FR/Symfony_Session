@@ -45,8 +45,6 @@ class UserController extends AbstractController
                 return $this->redirectToRoute("change_password");
             }
         }
-
-
         return $this->render("security/change_password.html.twig", [
             "form"=>$form->createView()
         ]);
@@ -69,7 +67,11 @@ class UserController extends AbstractController
      * @Route("/{id}", name="user_detail")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function userDetail(User $user){
+    public function userDetail(User $user = null){
+        if (!$user) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
         return $this->render("user/user_detail.html.twig", [
             "user"=>$user
         ]);
@@ -79,7 +81,12 @@ class UserController extends AbstractController
      * @Route("/edit/{id}", name="edit_user")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function editUser(User $user, Request $request){
+    public function editUser(User $user = null, Request $request){
+        if (!$user) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+
         $manager = $this->getDoctrine()->getManager();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -101,7 +108,12 @@ class UserController extends AbstractController
      * @Route("/admin/toogle/{id}", name="admin_toggle")
      * @IsGranted("ROLE_ADMIN")
      */
-    public function toggleAdmin(User $user){
+    public function toggleAdmin(User $user = null){
+        if (!$user) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+
         $manager = $this->getDoctrine()->getManager();
         $status = "";
         if($user->hasRole("ROLE_ADMIN")){
@@ -112,7 +124,6 @@ class UserController extends AbstractController
             $status = "add";
         }
 
-        dump($user);
         $manager->persist($user);
         $manager->flush();
         if ($status == "add") {

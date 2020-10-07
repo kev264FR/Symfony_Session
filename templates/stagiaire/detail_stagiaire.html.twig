@@ -45,7 +45,10 @@
                 <ul>
                     {% for formation in stagiaire.inscription %}
                         <li>
-                            <strong>{{formation.intitule}}</strong> 
+                            <a href="{{path("session", {id: formation.id})}}">
+                                <strong>{{formation.intitule}}</strong>
+                            </a>
+                             
                             <ul>
                                 <li>
                                     du {{formation.dateDebut | date("d/m/Y")}}

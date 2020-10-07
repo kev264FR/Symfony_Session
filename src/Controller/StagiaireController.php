@@ -65,7 +65,11 @@ class StagiaireController extends AbstractController
     /**
      * @Route("/detail/{id}", name="stagiaire")
      */
-    public function detailStagiaire(Stagiaire $stagiaire){
+    public function detailStagiaire(Stagiaire $stagiaire = null){
+        if (!$stagiaire) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
         return $this->render("stagiaire/detail_stagiaire.html.twig", [
             "stagiaire"=>$stagiaire
         ]);
@@ -74,7 +78,11 @@ class StagiaireController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete_stagiaire")
      */
-    public function deleteStagiaire(Stagiaire $stagiaire){
+    public function deleteStagiaire(Stagiaire $stagiaire = null){
+        if (!$stagiaire) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
         $manager = $this->getDoctrine()->getManager();
         $manager->remove($stagiaire);
         $manager->flush();

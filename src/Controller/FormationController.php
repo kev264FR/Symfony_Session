@@ -76,7 +76,16 @@ class FormationController extends AbstractController
     /**
      * @Route("/{id}", name="session")
      */
-    public function detailSession(Session $session){
+    public function detailSession(Session $session = null){
+        if (!$session) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+        if (count($session->getStagiaires()) > $session->getPlace()) {
+            $this->addFlash("error", "Nombre de stagiaires suppérieure au nombre de place");
+            return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
+        }
+
         return $this->render("formation/detail_session.html.twig", [
             "session"=>$session
         ]);
@@ -85,7 +94,12 @@ class FormationController extends AbstractController
     /**
      * @Route("/stagiaires/{id}", name="stagiaires_in_session")
      */
-    public function addStagiaire(Request $request, Session $session){
+    public function addStagiaire(Request $request, Session $session = null){
+        if (!$session) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+
         $manager = $this->getDoctrine()->getManager();
 
         $form = $this->createForm(InscriptionType::class, $session);
@@ -134,7 +148,12 @@ class FormationController extends AbstractController
     /**
      * @Route("/modules/{id}", name="session_programme")
      */
-    public function newProgramme(Request $request, Session $session){
+    public function newProgramme(Request $request, Session $session = null){
+        if (!$session) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+
         $manager = $this->getDoctrine()->getManager();
         $form = $this->createForm(ProgrammeType::class, $session);
         $form->handleRequest($request);
@@ -172,7 +191,12 @@ class FormationController extends AbstractController
     /**
      * @Route("/delete/{id}", name="delete_session")
      */
-    public function deleteSession(Session $session){
+    public function deleteSession(Session $session = null){
+        if (!$session) {
+            $this->addFlash("error","Action impossible");
+            return $this->redirectToRoute("home");
+        }
+        
         $manager = $this->getDoctrine()->getManager();
         foreach ($session->getStagiaires() as $stagiaire) {
             $session->removeStagiaire($stagiaire);
