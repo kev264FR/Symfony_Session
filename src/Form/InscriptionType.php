@@ -4,11 +4,12 @@ namespace App\Form;
 
 use App\Entity\Session;
 use App\Entity\Stagiaire;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class InscriptionType extends AbstractType
 {
@@ -27,7 +28,12 @@ class InscriptionType extends AbstractType
                 "allow_add"=>true,
                 "allow_delete"=>true,
                 "label"=>false,
-                "attr"=>["label"=>false]
+                "attr"=>["label"=>false],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
         ;
     }

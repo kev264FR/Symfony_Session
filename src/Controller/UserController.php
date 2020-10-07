@@ -127,8 +127,8 @@ class UserController extends AbstractController
         $manager->persist($user);
         $manager->flush();
         if ($status == "add") {
-            $this->addFlash("success", "L'user est désormais admin");
-        }else $this->addFlash("success", "L'user n'est plus admin");
+            $this->addFlash("success", $user->fullName()." est désormais admin");
+        }else $this->addFlash("success", $user->fullName()." n'est plus admin");
         
         return $this->redirectToRoute("user_detail", ["id"=>$user->getId()]);
     }

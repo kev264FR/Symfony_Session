@@ -82,7 +82,7 @@ class FormationController extends AbstractController
             return $this->redirectToRoute("home");
         }
         if (count($session->getStagiaires()) > $session->getPlace()) {
-            $this->addFlash("error", "Nombre de stagiaires suppérieure au nombre de place");
+            $this->addFlash("error", "Place insuffisantes");
             return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
         }
 
@@ -109,19 +109,22 @@ class FormationController extends AbstractController
             $stagiaires = $this->getDoctrine()
                             ->getRepository(Stagiaire::class)
                             ->findFromSession($session);
-            foreach ($stagiaires as $stg) {
-                $stg->removeInscription($session);
+            foreach ($stagiaires as $stagiaire) {
+                $stagiaire->removeInscription($session);
+            }
+            $stagiaires = [];
+            foreach ($session->getStagiaires() as $stagiaire) {
+                $stagiaires[] = $stagiaire;
+                if (count(array_keys($stagiaires, $stagiaire)) == 1) {
+                    $session->addStagiaire($stagiaire);
+                }
             }
 
-            foreach ($session->getStagiaires() as $stagiaire) {
-                $session->addStagiaire($stagiaire);
-            }
-            
             $manager->persist($session);
             $manager->flush();
 
             if (count($session->getStagiaires()) / 2 > $session->getPlace()) {
-                $this->addFlash("error", "Nombre de stagiaires suppérieure au nombre de place");
+                $this->addFlash("error", "Place insuffisantes");
                 return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
             }
             
@@ -129,7 +132,7 @@ class FormationController extends AbstractController
                 foreach ($stagiaire->getinscription() as $formation) {
                     if ($session != $formation) {
                         if (($session->getDateDebut() <= $formation->getDateFin()) && ($session->getDateFin() >= $formation->getDateDebut())) {
-                            $this->addFlash("error", "erreur un ou plusieurs des stagiaires sont indisponible");
+                            $this->addFlash("error", "Le stagiaire {$stagiaire->fullName()} participe déjà à une formation à ce moment");
                             return $this->redirectToRoute("stagiaires_in_session", ["id"=>$session->getId()]);
                         }
                     }
@@ -167,16 +170,17 @@ class FormationController extends AbstractController
                 $manager->remove($prgrm);
             }
             $dureeTotale = 0;
+            
             foreach ($session->getProgrammes() as $prgrm) {
                 $prgrm->setUser($this->getUser());
                 $prgrm->setSession($session);
-                $manager->persist($prgrm);
                 $dureeTotale = $dureeTotale + $prgrm->getDuree();
+                $manager->persist($prgrm);
             }
             $manager->flush();
             
             if ($dureeTotale > $session->sessionDuree() / 5 ) {
-                $this->addFlash("error", "Durée des modules supérieure a la durée de la formation");
+                $this->addFlash("error", "Formation trop courte");
                 return $this->redirectToRoute("session_programme", ["id"=>$session->getId()]);
             }
             return $this->redirectToRoute("session", ["id"=>$session->getId()]);
@@ -196,7 +200,7 @@ class FormationController extends AbstractController
             $this->addFlash("error","Action impossible");
             return $this->redirectToRoute("home");
         }
-        
+
         $manager = $this->getDoctrine()->getManager();
         foreach ($session->getStagiaires() as $stagiaire) {
             $session->removeStagiaire($stagiaire);

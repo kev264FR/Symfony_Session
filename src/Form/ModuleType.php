@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Categorie;
 use App\Entity\Module;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ModuleType extends AbstractType
@@ -16,15 +17,30 @@ class ModuleType extends AbstractType
         $builder
             ->add('nom', null, [
                 "attr"=>["class"=>"form-control"],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
             ->add('description', null, [
-                "attr"=>["class"=>"form-control"]
+                "attr"=>["class"=>"form-control"],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
             ->add("categorie", EntityType::class, [
                 "class"=>Categorie::class,
                 "choice_label"=>"nom",
                 "placeholder"=>"Selectonnez un categorie",
-                "attr"=>["class"=>"form-control"]
+                "attr"=>["class"=>"form-control"],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
         ;
     }

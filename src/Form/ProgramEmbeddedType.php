@@ -2,11 +2,12 @@
 
 namespace App\Form;
 
-use App\Entity\Programme;
 use App\Entity\Module;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use App\Entity\Programme;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProgramEmbeddedType extends AbstractType
@@ -19,11 +20,21 @@ class ProgramEmbeddedType extends AbstractType
                 "choice_label"=>"nom",
                 "attr"=>["class"=>"form-control"],
                 "label"=>"Choix du module :",
-                "placeholder"=>"Choix du module"
+                "placeholder"=>"Choix du module",
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
             ->add("duree", null, [
                 "attr"=>["class"=>"form-control"],
-                "label"=>"Choix de la durée :"
+                "label"=>"Choix de la durée :",
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
         ;
     }

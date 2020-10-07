@@ -78,6 +78,14 @@ class ModuleController extends AbstractController
             return $this->redirectToRoute("home");
         }
         $manager = $this->getDoctrine()->getManager();
+
+        foreach ($categorie->getModules() as $module) {
+            if (!$module->getProgrammes()->isEmpty()) {
+                $this->addFlash("error", "Le module {$module->getNom()} est assigné à une session de formation");
+                return $this->redirectToRoute("categories");
+            }
+            $manager->remove($module);
+        }
         $manager->remove($categorie);
         $manager->flush();
 
@@ -130,6 +138,9 @@ class ModuleController extends AbstractController
             $manager->persist($module);
             $manager->flush();
             
+            if (!$categorie) {
+                $categorie = $module->getCategorie();
+            }
             return $this->redirectToRoute("modules_in_categorie", ["id"=>$categorie->getId()]);
         }
 
@@ -147,6 +158,7 @@ class ModuleController extends AbstractController
             $this->addFlash("error","Action impossible");
             return $this->redirectToRoute("home");
         }
+
         $manager = $this->getDoctrine()->getManager();
         $categorie = $module->getCategorie();
         $manager->remove($module);

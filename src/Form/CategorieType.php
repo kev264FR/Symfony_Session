@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategorieType extends AbstractType
@@ -16,7 +17,12 @@ class CategorieType extends AbstractType
                 "attr"=>[
                     "class"=>"form-control"
                 ],
-                "label"=>"Intitulé de la categorie :"
+                "label"=>"Intitulé de la categorie :",
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
         ;
     }

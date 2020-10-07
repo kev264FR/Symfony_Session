@@ -312,7 +312,7 @@ class User implements UserInterface
         return $this;
     }
     
-    public function FullName(){
+    public function fullName(){
         return $this->nom." ".$this->prenom;
     }
 

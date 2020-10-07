@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\Session;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SessionType extends AbstractType
@@ -16,6 +17,11 @@ class SessionType extends AbstractType
                 "label"=>"Intitulé de la formation :",
                 "attr"=>[
                     "class"=>"form-control"
+                ],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
                 ]
             ])
             ->add('dateDebut', null, [
@@ -23,6 +29,11 @@ class SessionType extends AbstractType
                 "widget"=>"single_text",
                 "attr"=>[
                         "class"=>"form-control"
+                ],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
                 ]
             ])
             ->add('dateFin', null, [
@@ -30,12 +41,22 @@ class SessionType extends AbstractType
                 "widget"=>"single_text",
                 "attr"=>[
                     "class"=>"form-control"
-                    ]
+                ],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
+                ]
             ])
             ->add('place', null, [
                 "label"=>"Nombre de places :",
                 "attr"=>[
                     "class"=>"form-control"
+                ],
+                "constraints"=> [
+                    new NotBlank([
+                        'message' => 'Obligatoire',
+                    ]),
                 ]
             ])
         ;
