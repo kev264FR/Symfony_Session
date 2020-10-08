@@ -71,7 +71,7 @@ class Session
         return $this->intitule;
     }
 
-    public function setIntitule(string $intitule): self
+    public function setIntitule(?string $intitule): self
     {
         $this->intitule = $intitule;
 
@@ -83,7 +83,7 @@ class Session
         return $this->dateDebut;
     }
 
-    public function setDateDebut(\DateTimeInterface $dateDebut): self
+    public function setDateDebut(?\DateTimeInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
@@ -95,7 +95,7 @@ class Session
         return $this->dateFin;
     }
 
-    public function setDateFin(\DateTimeInterface $dateFin): self
+    public function setDateFin(?\DateTimeInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 
@@ -107,7 +107,7 @@ class Session
         return $this->place;
     }
 
-    public function setPlace(int $place): self
+    public function setPlace(?int $place): self
     {
         $this->place = $place;
 

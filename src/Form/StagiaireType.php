@@ -8,6 +8,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class StagiaireType extends AbstractType
 {
@@ -44,7 +46,7 @@ class StagiaireType extends AbstractType
                 "constraints"=> [
                     new NotBlank([
                         'message' => 'Obligatoire',
-                    ]),
+                    ])
                 ]
             ])
             ->add('numero', null, [
@@ -52,44 +54,24 @@ class StagiaireType extends AbstractType
                     "class"=>"form-control"
                 ],
                 "label"=>"Numero de telephone :",
-                "constraints"=> [
-                    new NotBlank([
-                        'message' => 'Obligatoire',
-                    ]),
-                ]
             ])
             ->add('adresse', null, [
                 "attr"=>[
                     "class"=>"form-control"
                 ],
                 "label"=>"Adresse postale :",
-                "constraints"=> [
-                    new NotBlank([
-                        'message' => 'Obligatoire',
-                    ]),
-                ]
             ])
             ->add('codePostal', null, [
                 "attr"=>[
                     "class"=>"form-control"
                 ],
                 "label"=>"Code postal :",
-                "constraints"=> [
-                    new NotBlank([
-                        'message' => 'Obligatoire',
-                    ]),
-                ]
             ])
             ->add('ville', null, [
                 "attr"=>[
                     "class"=>"form-control"
                 ],
                 "label"=>"Ville :",
-                "constraints"=> [
-                    new NotBlank([
-                        'message' => 'Obligatoire',
-                    ]),
-                ]
             ])
         ;
     }

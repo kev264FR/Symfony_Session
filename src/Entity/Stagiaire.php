@@ -80,7 +80,7 @@ class Stagiaire
         return $this->nom;
     }
 
-    public function setNom(string $nom): self
+    public function setNom(?string $nom): self
     {
         $this->nom = $nom;
 
@@ -92,7 +92,7 @@ class Stagiaire
         return $this->prenom;
     }
 
-    public function setPrenom(string $prenom): self
+    public function setPrenom(?string $prenom): self
     {
         $this->prenom = $prenom;
 
@@ -104,7 +104,7 @@ class Stagiaire
         return $this->email;
     }
 
-    public function setEmail(string $email): self
+    public function setEmail(?string $email): self
     {
         $this->email = $email;
 

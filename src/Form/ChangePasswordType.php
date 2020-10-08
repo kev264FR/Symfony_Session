@@ -29,7 +29,7 @@ class ChangePasswordType extends AbstractType
                 'invalid_message' => 'The password fields must match.',
                 'options' => ['attr' => ['class' => 'form-control']],
                 'required' => true,
-                'first_options'  => ['label' => 'Nouveau mod de passe :'],
+                'first_options'  => ['label' => 'Nouveau mot de passe :'],
                 'second_options' => ['label' => 'Repeter le nouveau mot de passe :'],
                 'mapped' => false,
                 'constraints' => [

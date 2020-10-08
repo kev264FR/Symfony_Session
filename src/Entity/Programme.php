@@ -50,7 +50,7 @@ class Programme
         return $this->duree;
     }
 
-    public function setDuree(int $duree): self
+    public function setDuree(?int $duree): self
     {
         $this->duree = $duree;
 

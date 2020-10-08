@@ -29,11 +29,6 @@ class InscriptionType extends AbstractType
                 "allow_delete"=>true,
                 "label"=>false,
                 "attr"=>["label"=>false],
-                "constraints"=> [
-                    new NotBlank([
-                        'message' => 'Obligatoire',
-                    ]),
-                ]
             ])
         ;
     }
