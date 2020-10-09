@@ -3,10 +3,9 @@ h1{
     text-align: center;
 }
 
-#flex{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
+.d-flex > .card{
+    max-width: 20rem;
+    margin: 0 10px;
 }
 
 .user-form {

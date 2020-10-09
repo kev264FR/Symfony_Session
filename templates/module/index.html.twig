@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Categories de modules{% endblock %}
 
 {% block bread %}
     <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
@@ -16,9 +15,9 @@
 
 <hr>
 
-<div id="flex">
+<div class="d-flex">
     {% for categorie in categories %}
-        <div class="card border-primary mb-3" style="max-width: 20rem;">
+        <div class="card border-primary mb-3">
             <div class="card-header">
                 <small>ajouté par : {{categorie.user.fullname}}</small>
             </div>

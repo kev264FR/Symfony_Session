@@ -112,14 +112,7 @@ class FormationController extends AbstractController
             foreach ($stagiaires as $stagiaire) {
                 $stagiaire->removeInscription($session);
             }
-            $stagiaires = [];
-            foreach ($session->getStagiaires() as $stagiaire) {
-                $stagiaires[] = $stagiaire;
-                if (count(array_keys($stagiaires, $stagiaire)) == 1) {
-                    $session->addStagiaire($stagiaire);
-                }
-            }
-
+            
             $manager->persist($session);
             $manager->flush();
 

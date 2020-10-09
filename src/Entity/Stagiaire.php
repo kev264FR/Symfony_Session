@@ -61,7 +61,7 @@ class Stagiaire
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Session::class, inversedBy="stagiaires")
+     * @ORM\ManyToMany(targetEntity=Session::class, mappedBy="stagiaires")
      */
     private $inscription;
 

@@ -46,7 +46,7 @@ class Session
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Stagiaire::class, mappedBy="inscription")
+     * @ORM\ManyToMany(targetEntity=Stagiaire::class, inversedBy="inscription")
      */
     private $stagiaires;
 
@@ -136,17 +136,19 @@ class Session
 
     public function addStagiaire(Stagiaire $stagiaire): self
     {
+        if (!$this->stagiaires->contains($stagiaire)) {
             $this->stagiaires[] = $stagiaire;
             $stagiaire->addInscription($this);
-
+        }
         return $this;
     }
 
     public function removeStagiaire(Stagiaire $stagiaire): self
     {
+        if ($this->stagiaires->contains($stagiaire)) {
             $this->stagiaires->removeElement($stagiaire);
             $stagiaire->removeInscription($this);
-
+        }
         return $this;
     }
 
@@ -160,19 +162,22 @@ class Session
 
     public function addProgramme(Programme $programme): self
     {
+        if (!$this->programmes->contains($programme)) {
             $this->programmes[] = $programme;
             $programme->setSession($this);
-
+        }
         return $this;
     }
 
     public function removeProgramme(Programme $programme): self
     {
+        if ($this->programmes->contains($programme)) {
             $this->programmes->removeElement($programme);
             // set the owning side to null (unless already changed)
             if ($programme->getSession() === $this) {
                 $programme->setSession(null);
             }
+        }
 
         return $this;
     }

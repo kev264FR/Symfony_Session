@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modules{% endblock %}
 
 {% block bread %}
     <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
@@ -14,20 +13,21 @@
 <a class="btn btn-primary" href="{{path("new_in_categorie", {cat_id: categorie.id})}}">Ajouter un module</a>
 
 <hr>
+<div class="d-flex">
+    {% for module in categorie.modules %}
 
-{% for module in categorie.modules %}
-
-    <div class="card border-secondary mb-3" style="max-width: 20rem;">
-        <div class="card-header">ajouté par {{module.user.fullname}} </div>
-        <div class="card-body">
-            <h4 class="card-title">{{module.nom}}</h4>
-            <p class="card-text">{{module.description}}</p>
-            <a class="btn btn-primary" href="{{path("edit_module", {id: module.id})}}">Modifier</a>
-            <a class="btn btn-danger" href="{{path("delete_module", {id: module.id})}}">Supprimer</a>
+        <div class="card border-secondary mb-3">
+            <div class="card-header">ajouté par {{module.user.fullname}} </div>
+            <div class="card-body">
+                <h4 class="card-title">{{module.nom}}</h4>
+                <p class="card-text">{{module.description}}</p>
+                <a class="btn btn-primary" href="{{path("edit_module", {id: module.id})}}">Modifier</a>
+                <a class="btn btn-danger" href="{{path("delete_module", {id: module.id})}}">Supprimer</a>
+            </div>
         </div>
-    </div>
-    
-{% endfor %}
+        
+    {% endfor %}
+</div>
 
 {% endblock %}
 
