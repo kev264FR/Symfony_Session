@@ -17,6 +17,7 @@ class UserType extends AbstractType
         $builder
             ->add('nom', null, [
                 "label"=>"Nom :",
+                "attr"=>["class"=>"form-control"],
                 "constraints"=> [
                     new NotBlank([
                         'message' => 'Obligatoire',
@@ -25,6 +26,7 @@ class UserType extends AbstractType
             ])
             ->add('prenom', null, [
                 "label"=>"Prenom :",
+                "attr"=>["class"=>"form-control"],
                 "constraints"=> [
                     new NotBlank([
                         'message' => 'Obligatoire',

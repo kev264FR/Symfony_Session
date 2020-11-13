@@ -1,7 +1,7 @@
 {% extends "base.html.twig" %}
 
 {% block bread %}
-    <li class="breadcrumb-item"><a href="{{path("home")}}">Home</a></li>
+    <li class="breadcrumb-item"><a href="{{path("home")}}">Accueil</a></li>
     <li class="breadcrumb-item"><a href="{{path("sessions")}}">Sessions</a></li>
     <li class="breadcrumb-item"><a href="{{path("session", {id: session.id})}}">{{session.intitule}}</a></li>
     <li class="breadcrumb-item active">Gestion des modules</li>

@@ -26,13 +26,13 @@
             <div class="collapse navbar-collapse" id="navbar-toggler">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{path("home")}}">Home</a>
+                        <a class="nav-link" href="{{path("home")}}">Accueil</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{path("sessions")}}">Sessions de formations</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{path("categories")}}">Les modules</a>
+                        <a class="nav-link" href="{{path("categories")}}">Catégories & Modules</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="{{path("stagiaires")}}">Stagiaires</a>
@@ -44,11 +44,11 @@
                                 <a class="nav-link" href="{{path("profile")}}">{{app.user.fullname}}</a>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{path("app_logout")}}">logout</a>
+                                <a class="nav-link" href="{{path("app_logout")}}">Déconnexion</a>
                             </li>
                         {% else %}
                             <li class="nav-item active">
-                                <a class="nav-link" href="{{path("app_login")}}">Login</a>
+                                <a class="nav-link" href="{{path("app_login")}}">Connexion</a>
                             </li>
                     {% endif %}
                     
